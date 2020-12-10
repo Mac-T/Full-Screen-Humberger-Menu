@@ -8,37 +8,47 @@ $(function() {
 
     $('.menu-trigger').on('click', function() {
 
-      var scrPosNum;
+        disHp = window.innerHeight;
+        disHp = Number(disHp);
 
         $('.modalWrap').animate({ opacity: "toggle" }, {
             duration: "slow",
             easing: "linear",
         });
         if (!$('.modalWrap').hasClass('onModal')) {
-          var scrPos = $(window).scrollTop();
+          scrPos = $(window).scrollTop();
           localStorage.setItem('scrPos', scrPos);
-          var scrPosNum = localStorage.getItem('scrPos');
+          scrPosNum = localStorage.getItem('scrPos');
           
-         
-
-        } else {
-
-
-          
-          $(window).scrollTop(scrPosNum);
-
-        }
+        } 
         
         $(this).toggleClass('active');
         $('.modalWrap').toggleClass('onModal');
-        $('body').css({ position: 'fixed', });
-         $(window).scrollTop(scrPosNum);
+        
         $('body').addClass('active');
         if (!$('.modalWrap').hasClass('onModal')) {
             //$('.modalWrap').hide();
-            $('body').css({ position: 'relative' });
+            $('body').css({
+                height: '100%',
+                width: '100%',
+                overflow: 'scroll',
+            });
+
+            
+        } else {
+            $('body').css({
+                height: disHp,
+                width: '100%',
+                overflow: 'hidden',
+            });
+
         }
+
         console.log(scrPosNum);
+        $(window).scrollTop(scrPosNum);
+        $('.modalWrap').css({top: scrPosNum + 'px'});
+
+        return false;
     });
 
     $(window).on("resize load", function() { //初回読み込みMODAL
